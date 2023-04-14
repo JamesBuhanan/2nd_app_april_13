@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                         } else if (showGreeting) {
                             Greeting(name = name, showGreeting = showGreeting)
                             LaunchedEffect(true) {
-                                delay(5000)
+                                delay(1000)
                                 showGreeting = false
                                 showQuestion = true
                             }
@@ -83,16 +83,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Question(modifier: Modifier = Modifier, onColorSelected: (String) -> Unit) {
     var selectedColor by remember { mutableStateOf("") }
+    var buttonClicked by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "What's your favorite color?",
-            modifier = modifier
-        )
+        if (!buttonClicked) {
+            Text(
+                text = "What's your favorite color?",
+                modifier = modifier
+            )
+        }
         Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = modifier.fillMaxWidth(),
@@ -103,14 +106,17 @@ fun Question(modifier: Modifier = Modifier, onColorSelected: (String) -> Unit) {
             ) {
                 selectedColor = "Red"
                 onColorSelected(selectedColor)
+                buttonClicked = true
             }
             ColorButton(text = "Green") {
                 selectedColor = "Green"
                 onColorSelected(selectedColor)
+                buttonClicked = true
             }
             ColorButton(text = "Blue") {
                 selectedColor = "Blue"
                 onColorSelected(selectedColor)
+                buttonClicked = true
             }
         }
         if (selectedColor.isNotEmpty()) {
@@ -122,7 +128,6 @@ fun Question(modifier: Modifier = Modifier, onColorSelected: (String) -> Unit) {
         }
     }
 }
-
 @DrawableRes
 fun getImageResource(color: String): Int {
     return when (color) {
