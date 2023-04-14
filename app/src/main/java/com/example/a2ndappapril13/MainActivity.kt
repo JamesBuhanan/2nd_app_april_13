@@ -1,18 +1,15 @@
 package com.example.a2ndappapril13
 
 import android.os.Bundle
-import android.widget.RadioGroup
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -84,24 +81,6 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ColorButton(text: String, onClick: () -> Unit, backgroundColor: Color) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.width(100.dp)
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = text,
-                color = MaterialTheme.colorScheme.onSurface,
-                textAlign = TextAlign.Center
-            )
-        }
-    }
-}
-@Composable
 fun Question(modifier: Modifier = Modifier, onColorSelected: (String) -> Unit) {
     var selectedColor by remember { mutableStateOf("") }
 
@@ -121,19 +100,18 @@ fun Question(modifier: Modifier = Modifier, onColorSelected: (String) -> Unit) {
         ) {
             ColorButton(
                 text = "Red",
-                onClick = {
-                    selectedColor = "Red"
-                    onColorSelected(selectedColor)
-                },
-            )
-            ColorButton(text = "Green", onClick = {
+            ) {
+                selectedColor = "Red"
+                onColorSelected(selectedColor)
+            }
+            ColorButton(text = "Green") {
                 selectedColor = "Green"
                 onColorSelected(selectedColor)
-            })
-            ColorButton(text = "Blue", onClick = {
+            }
+            ColorButton(text = "Blue") {
                 selectedColor = "Blue"
                 onColorSelected(selectedColor)
-            })
+            }
         }
         if (selectedColor.isNotEmpty()) {
             Image(
@@ -154,14 +132,31 @@ fun getImageResource(color: String): Int {
         else -> throw IllegalArgumentException("Unknown color: $color")
     }
 }
-
 @Composable
 fun ColorButton(text: String, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.width(100.dp)
-    ) {
-        Text(text = text)
+    var buttonPressed by remember { mutableStateOf(false) } // add a mutable state variable
+
+    if (!buttonPressed) { // show the button if it hasn't been pressed
+        Button(
+            onClick = {
+                onClick()
+                buttonPressed = true // set the mutable state variable to true
+            },
+            modifier = Modifier
+                .width(100.dp)
+                .height(50.dp)
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = text,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
     }
 }
 
