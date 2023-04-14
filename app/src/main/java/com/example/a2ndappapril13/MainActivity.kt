@@ -128,6 +128,7 @@ fun Question(modifier: Modifier = Modifier, onColorSelected: (String) -> Unit) {
         }
     }
 }
+
 @DrawableRes
 fun getImageResource(color: String): Int {
     return when (color) {
