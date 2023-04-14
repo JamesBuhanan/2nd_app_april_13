@@ -126,9 +126,9 @@ fun Question(modifier: Modifier = Modifier, onColorSelected: (String) -> Unit) {
 @DrawableRes
 fun getImageResource(color: String): Int {
     return when (color) {
-        "Red" -> R.drawable.troll
-        "Green" -> R.drawable.troll
-        "Blue" -> R.drawable.troll
+        "Red" -> R.drawable.red_troll_face
+        "Green" -> R.drawable.green_troll_face
+        "Blue" -> R.drawable.blue_troll_face
         else -> throw IllegalArgumentException("Unknown color: $color")
     }
 }
