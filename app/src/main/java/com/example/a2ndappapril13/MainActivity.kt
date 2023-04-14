@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
                             }
                         } else if (showQuestion) {
                             Question(onColorSelected = { color ->
-                                // Do something with the selected color
+
                             })
                         }
                     }
